@@ -1,3 +1,5 @@
+from telegram import InlineKeyboardButton, ReplyKeyboardMarkup
+
 def build_options_keyboard(buttons, back=True, state='Back', mode=True):
     keys = []
     index = 0
