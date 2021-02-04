@@ -1,4 +1,11 @@
 from telegram import InlineKeyboardButton, ReplyKeyboardMarkup
+# import logging
+
+# logging.basicConfig(
+#     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+# )
+
+# logger = logging.getLogger(__name__)
 
 def build_options_keyboard(buttons, back=True, state='Back', mode=True):
     keys = []
@@ -23,7 +30,7 @@ def build_options_inline(buttons, back=True, state='Back', marker='o'):
     keyboard = []
     index = 0
     for button in buttons:
-        logger.info(button + ' ' + str(len(button)))
+        # logger.info(button + ' ' + str(len(button)))
         if len(button) < 30:
             if index%2 == 0:
                 keyboard.append([InlineKeyboardButton(button, callback_data=marker + button)])
@@ -37,12 +44,12 @@ def build_options_inline(buttons, back=True, state='Back', marker='o'):
         keyboard.append([InlineKeyboardButton('Back', callback_data=state)])
     return keyboard
 
-def get_user(update, callback=False):
-    if callback:
+def get_user(update):
+    if update.callback_query:
         data = update.callback_query.message.chat
     else:
         data = update.message.chat 
-    print(data)
+
     if data.username != None:
         user = data.username
     else:
