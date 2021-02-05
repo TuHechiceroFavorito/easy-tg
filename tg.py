@@ -1,4 +1,4 @@
-from telegram import InlineKeyboardButton, ReplyKeyboardMarkup
+from telegram import InlineKeyboardButton, ReplyKeyboardMarkup, InlineKeyboardMarkup
 # import logging
 
 # logging.basicConfig(
@@ -7,7 +7,7 @@ from telegram import InlineKeyboardButton, ReplyKeyboardMarkup
 
 # logger = logging.getLogger(__name__)
 
-def build_options_keyboard(buttons, back=True, state='Back', mode=True):
+def buildKeyboard(buttons, back=False, state='Back', one=True):
     keys = []
     index = 0
     for button in buttons:
@@ -21,16 +21,15 @@ def build_options_keyboard(buttons, back=True, state='Back', mode=True):
             keys.append([button])
             index = 0
     if back:
-        keys.append('Back')
+        keys.append(['Back'])
 
     keyboard = ReplyKeyboardMarkup(keys, one_time_keyboard=mode)
     return keyboard
 
-def build_options_inline(buttons, back=True, state='Back', marker='o'):
+def buildInline(buttons, back=False, state='Back', marker=''):
     keyboard = []
     index = 0
     for button in buttons:
-        # logger.info(button + ' ' + str(len(button)))
         if len(button) < 30:
             if index%2 == 0:
                 keyboard.append([InlineKeyboardButton(button, callback_data=marker + button)])
@@ -42,7 +41,7 @@ def build_options_inline(buttons, back=True, state='Back', marker='o'):
             index = 0
     if back:
         keyboard.append([InlineKeyboardButton('Back', callback_data=state)])
-    return keyboard
+    return InlineKeyboardMarkup(keyboard)
 
 def get_user(update):
     if update.callback_query:
